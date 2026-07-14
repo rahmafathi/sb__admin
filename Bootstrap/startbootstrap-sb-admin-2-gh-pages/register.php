@@ -1,10 +1,38 @@
 <?php
 
-include"include/header.php"
+include 'Include/db.php'; 
 
 
+if (isset($_POST['register_btn'])) {
+    
+
+    $first_name = $_POST['first_name'];
+    $last_name  = $_POST['last_name'];
+    $email      = $_POST['email'];
+    $password   = $_POST['pass']; 
+
+    
+    $query = "INSERT INTO useres (first_name, last_name, email, pass) 
+              VALUES ('$first_name', '$last_name', '$email', '$password')";
+
+
+    if ($connect->query($query)) {
+        header("Location: index.php");
+        exit();
+    } else {
+        echo "Error: " . $connect->error;
+    }
+}
+?>
+
+
+<?php
+
+include "include/header.php"
 
 ?>
+
+
 <body class="bg-gradient-primary">
 
     <div class="container">
@@ -19,34 +47,34 @@ include"include/header.php"
                             <div class="text-center">
                                 <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
                             </div>
-                            <form class="user">
+                            <form class="user" action="register.php" method="POST">
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
                                         <input type="text" class="form-control form-control-user" id="exampleFirstName"
-                                            placeholder="First Name">
+                                            placeholder="First Name" name="first_name" require>
                                     </div>
                                     <div class="col-sm-6">
                                         <input type="text" class="form-control form-control-user" id="exampleLastName"
-                                            placeholder="Last Name">
+                                            placeholder="Last Name" name="last_name" require>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <input type="email" class="form-control form-control-user" id="exampleInputEmail"
-                                        placeholder="Email Address">
+                                        placeholder="Email Address" name="email" require>
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
                                         <input type="password" class="form-control form-control-user"
-                                            id="exampleInputPassword" placeholder="Password">
+                                            id="exampleInputPassword" placeholder="Password" name="pass" require>
                                     </div>
                                     <div class="col-sm-6">
                                         <input type="password" class="form-control form-control-user"
-                                            id="exampleRepeatPassword" placeholder="Repeat Password">
+                                            id="exampleRepeatPassword" placeholder="Repeat Password" name="repeat_password">
                                     </div>
                                 </div>
-                                <a href="login.php" class="btn btn-primary btn-user btn-block">
+                                <button type="submit" name="register_btn" class="btn btn-primary btn-user btn-block">
                                     Register Account
-                                </a>
+                                </button>
                                 <hr>
                                 <a href="index.php" class="btn btn-google btn-user btn-block">
                                     <i class="fab fa-google fa-fw"></i> Register with Google
