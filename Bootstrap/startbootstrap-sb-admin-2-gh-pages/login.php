@@ -1,4 +1,34 @@
 <?php
+session_start(); 
+
+include 'Include/db.php'; 
+
+if (isset($_POST['login_btn'])) {
+
+    $email    = $_POST['email'];
+    $password = $_POST['pass']; 
+
+    
+    $query = "SELECT * FROM useres WHERE email = '$email' AND pass = '$password'";
+    $result = $connect->query($query);
+
+    
+    if ($result->num_rows > 0) {
+        
+        $_SESSION['user_logged_in'] = true; 
+        
+        header("Location: index.php"); 
+        exit();
+
+    } else {
+        echo "Invalid email or password!"; 
+    }
+}
+?>
+
+
+
+<?php
 
 include"include/header.php"
 
@@ -22,26 +52,31 @@ include"include/header.php"
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
                                     </div>
-                                    <form class="user">
+                                    <form class="user" action="login.php" method="POST">
                                         <div class="form-group">
-                                            <input type="email" class="form-control form-control-user"
+                                            <!-- أضفنا name="email" -->
+                                            <input type="email" name="email" class="form-control form-control-user"
                                                 id="exampleInputEmail" aria-describedby="emailHelp"
-                                                placeholder="Enter Email Address...">
+                                                placeholder="Enter Email Address..." required>
                                         </div>
+                                        
                                         <div class="form-group">
-                                            <input type="password" class="form-control form-control-user"
-                                                id="exampleInputPassword" placeholder="Password">
+                                            <!-- أضفنا name="pass" -->
+                                            <input type="password" name="pass" class="form-control form-control-user"
+                                                id="exampleInputPassword" placeholder="Password" required>
                                         </div>
+                                        
                                         <div class="form-group">
                                             <div class="custom-control custom-checkbox small">
                                                 <input type="checkbox" class="custom-control-input" id="customCheck">
-                                                <label class="custom-control-label" for="customCheck">Remember
-                                                    Me</label>
+                                                <label class="custom-control-label" for="customCheck">Remember Me</label>
                                             </div>
                                         </div>
-                                        <a href="index.php" class="btn btn-primary btn-user btn-block">
+                                        
+                                        
+                                        <button type="submit" name="login_btn" class="btn btn-primary btn-user btn-block">
                                             Login
-                                        </a>
+                                        </button>
                                         <hr>
                                         <a href="index.php" class="btn btn-google btn-user btn-block">
                                             <i class="fab fa-google fa-fw"></i> Login with Google

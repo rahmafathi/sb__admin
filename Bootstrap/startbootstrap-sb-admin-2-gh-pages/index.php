@@ -1,10 +1,15 @@
 <?php
+session_start(); 
 
-include"include/header.php"
-
-
-
+if (!isset($_SESSION['user_logged_in'])) {
+    header("Location: login.php");
+    exit();
+}
 ?>
+
+
+
+<?php include"include/header.php" ?>
 <body id="page-top">
 
 <?php

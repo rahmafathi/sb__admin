@@ -1,24 +1,30 @@
 <?php
+session_start(); 
 
 include 'Include/db.php'; 
 
-
 if (isset($_POST['register_btn'])) {
-    
 
     $first_name = $_POST['first_name'];
     $last_name  = $_POST['last_name'];
     $email      = $_POST['email'];
     $password   = $_POST['pass']; 
 
-    
     $query = "INSERT INTO useres (first_name, last_name, email, pass) 
               VALUES ('$first_name', '$last_name', '$email', '$password')";
 
-
     if ($connect->query($query)) {
-        header("Location: index.php");
+
+    
+        $_SESSION['user_logged_in'] = true; 
+        
+        
+        echo "Account created successfully!";
+        
+
+        header("refresh:2; url=index.php"); 
         exit();
+
     } else {
         echo "Error: " . $connect->error;
     }
